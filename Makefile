@@ -2,6 +2,7 @@
 BROKER_BINARY=brokerApp
 AUTH_BINARY=authApp
 POSTS_BINARY=postsApp
+IMAGES_BINARY=imagesApp
 
 ## up: starts all containers in the background without forcing build
 up:
@@ -10,7 +11,7 @@ up:
 	@echo "Docker images started!"
 
 ## up_build: stops docker-compose (if running), builds all projects and starts docker compose
-up_build: down build_broker build_auth build_posts
+up_build: down build_broker build_auth build_posts build_images
 	@echo "Stopping docker images (if running...)"
 	docker-compose down
 	@echo "Building (when required) and starting docker images..."
@@ -20,7 +21,7 @@ up_build: down build_broker build_auth build_posts
 ## down: stop docker compose
 down:
 	@echo "Stopping docker compose..."
-	docker-compose down
+	docker-compose down --remove-orphans
 	@echo "Done!"
 
 ## build_broker: builds the broker binary as a linux executable
@@ -39,6 +40,12 @@ build_auth:
 build_posts:
 	@echo "Building posts binary..."
 	cd ../icl-posts-service && env GOOS=linux CGO_ENABLED=0 go build -o ${POSTS_BINARY} ./
+	@echo "Done!"
+
+## build_images: builds the images binary as a linux executable
+build_images:
+	@echo "Building images binary..."
+	cd ../icl-images-service && env GOOS=linux CGO_ENABLED=0 go build -o ${IMAGES_BINARY} ./
 	@echo "Done!"
 
 ## build_front: builds the frone end binary

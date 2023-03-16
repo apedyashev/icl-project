@@ -48,7 +48,21 @@ services:
       DB_USER: postgres
       DB_PASSWORD: password
       DB_NAME: posts
-      # POSTGRES_DSN: "host=postgres port=5432 user=postgres password=password dbname=users sslmode=disable timezone=UTC connect_timeout=5"
+
+  images-service:
+    build: 
+      context: ./../icl-images-service
+      dockerfile: ./../icl-images-service/images-service.dockerfile
+    restart: always
+    deploy:
+      mode: replicated
+      replicas: 1
+    # environment:
+    #   DB_HOST: postgres
+    #   DB_PORT: 5432
+    #   DB_USER: postgres
+    #   DB_PASSWORD: password
+    #   DB_NAME: posts
 
   postgres:
     image: 'postgres:14.2'
@@ -77,3 +91,14 @@ services:
       MYSQL_DATABASE: jwt_demo
     volumes:
       - ./db-data/mysql/:/var/lib/mysql
+
+  mongo:
+    image: 'mongo:4.2.16-bionic'
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_DATABASE: images
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+    volumes:
+      - ./db-data/mongo/:/data/db

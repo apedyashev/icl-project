@@ -1,8 +1,4 @@
 # FRONT_END_BINARY=frontApp
-BROKER_BINARY=brokerApp
-AUTH_BINARY=authApp
-POSTS_BINARY=postsApp
-IMAGES_BINARY=imagesApp
 
 ## up: starts all containers in the background without forcing build
 up:
@@ -27,25 +23,25 @@ down:
 ## build_broker: builds the broker binary as a linux executable
 build_broker:
 	@echo "Building broker binary..."
-	cd ../icl-broker-service && env GOOS=linux CGO_ENABLED=0 go build -o ${BROKER_BINARY} ./cmd/api
+	cd ../icl-broker-service &&  make build 
 	@echo "Done!"
 
 ## build_auth: builds the auth binary as a linux executable
 build_auth:
 	@echo "Building auth binary..."
-	cd ../icl-auth-service && env GOOS=linux CGO_ENABLED=0 go build -o ${AUTH_BINARY} ./
+	cd ../icl-auth-service && make build
 	@echo "Done!"
 
 ## build_posts: builds the posts binary as a linux executable
 build_posts:
 	@echo "Building posts binary..."
-	cd ../icl-posts-service && env GOOS=linux CGO_ENABLED=0 go build -o ${POSTS_BINARY} ./
+	cd ../icl-posts-service && make build
 	@echo "Done!"
 
 ## build_images: builds the images binary as a linux executable
 build_images:
 	@echo "Building images binary..."
-	cd ../icl-images-service && env GOOS=linux CGO_ENABLED=0 go build -o ${IMAGES_BINARY} ./
+	cd ../icl-images-service && make build
 	@echo "Done!"
 
 ## build_front: builds the frone end binary

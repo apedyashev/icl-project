@@ -12,6 +12,7 @@ services:
       replicas: 1
     environment:
       JWT_SECRET: jde^7dslcdcd
+      AUTH_SRVS_GRPC_ADDR: "auth-service:50001"
 
   auth-service:
     build: 
@@ -30,7 +31,7 @@ services:
       DB_NAME: jwt_demo
       DB_PORT: 3306
       API_SECRET: supersecretkey
-      # POSTGRES_DSN: "host=postgres port=5432 user=postgres password=password dbname=users sslmode=disable timezone=UTC connect_timeout=5"
+      GRPC_PORT: 50001
 
   posts-service:
     build: 
